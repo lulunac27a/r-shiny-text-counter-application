@@ -5,7 +5,8 @@ ui <- fluidPage(
     titlePanel("Text Counter Application in R Shiny"),
     sidebarLayout(
         sidebarPanel(
-            textAreaInput("text", "Enter text:", rows = 10, cols = 80)
+            textAreaInput("text", "Enter text:", rows = 10, cols = 80),
+            fileInput("file", "Upload a .txt file", accept = ".txt")
         ),
         mainPanel(
             textOutput("textOutput")
@@ -16,6 +17,12 @@ ui <- fluidPage(
 server <- function(input, output) {
     output$textOutput <- renderText({
         text <- input$text
+        
+        if (!is.null(input$file)) {
+            text <- readLines(input$file$datapath)
+            text <- paste(text, collapse = "\n")
+        }
+        
         chars <- nchar(text)
         words <- str_count(text, "\\S+")
         lines <- str_count(text, "\n") + 1
