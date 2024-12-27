@@ -16,17 +16,23 @@ ui <- fluidPage(titlePanel("Text Counter Application in R Shiny"),
 # define server component
 server <- function(input, output) {
     output$textOutput <- renderText({
-        text <- input$text  #text area box input
+        # text area box input
+        text <- input$text
 
+        # if file uploaded is not null
         if (!is.null(input$file)) {
-            # if file uploaded is not null
-            text <- readLines(input$file$datapath)  #read lines of text from uploaded file
-            text <- paste(text, collapse = "\n")  #insert text into text area box
+            # read lines of text from uploaded file
+            text <- readLines(input$file$datapath)
+            # insert text into text area box
+            text <- paste(text, collapse = "\n")
         }
 
-        chars <- nchar(text)  #number of characters
-        words <- str_count(text, "\\S+")  #number of words
-        lines <- str_count(text, "\n") + 1  #number of lines
+        # number of characters
+        chars <- nchar(text)
+        # number of words
+        words <- str_count(text, "\\S+")
+        # number of lines
+        lines <- str_count(text, "\n") + 1
         paste("Characters:", chars, "\nWords:", words, "\nLines:",
             lines)
     })
