@@ -33,8 +33,9 @@ server <- function(input, output) {
         words <- str_count(text, "\\S+")
         # number of lines
         lines <- str_count(text, "\n") + 1
-        paste("Characters:", chars, "\nWords:", words, "\nLines:",
-            lines)
+        paste("Characters:", format(chars, big.mark = ",", scientific = FALSE),
+            "\nWords:", format(words, big.mark = ",", scientific = FALSE),
+            "\nLines:", format(lines, big.mark = ",", scientific = FALSE))
     })
 }
 
