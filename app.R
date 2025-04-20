@@ -4,14 +4,18 @@ library(shiny)
 library(stringr)
 
 # define UI component
-ui <- fluidPage(titlePanel("Text Counter Application in R Shiny"),
-    sidebarLayout(sidebarPanel(textAreaInput("text", "Enter text:",
-        rows = 10, cols = 80)  #text area input
-, fileInput("file",
-        "Upload a .txt file", accept = ".txt")  #file input accepts .txt text files
-),
-        mainPanel(textOutput("textOutput")  #text output content
-)))
+ui <- fluidPage(
+    titlePanel("Text Counter Application in R Shiny"),
+    sidebarLayout(
+        sidebarPanel(
+            textAreaInput("text", "Enter text:", rows = 10, cols = 80), # text area input
+            fileInput("file", "Upload a .txt file", accept = ".txt") # file input accepts .txt text files
+        ),
+        mainPanel(
+            textOutput("textOutput") # text output content
+        )
+    )
+)
 
 # define server component
 server <- function(input, output) {
@@ -33,10 +37,14 @@ server <- function(input, output) {
         words <- str_count(text, "\\S+")
         # number of lines
         lines <- str_count(text, "\n") + 1
-        paste("Characters:", format(round(chars, 0), big.mark = ",",
-            scientific = FALSE), "\nWords:", format(round(words,
-            0), big.mark = ",", scientific = FALSE), "\nLines:",
-            format(round(lines, 0), big.mark = ",", scientific = FALSE))
+        paste(
+            "Characters:",
+            format(round(chars, 0), big.mark = ",", scientific = FALSE),
+            "\nWords:",
+            format(round(words, 0), big.mark = ",", scientific = FALSE),
+            "\nLines:",
+            format(round(lines, 0), big.mark = ",", scientific = FALSE)
+        )
     })
 }
 
